@@ -56,7 +56,8 @@ export function buildTimestamp() {
    * the load, we'll end-up with an outdated build timestep at the service
    * side. */
   if (!BUILD_TIMESTAMP) {
-    if (isServerSide()) {
+    if (process.env.NODE_ENV === 'test') BUILD_TIMESTAMP = 'N/A';
+    else if (isServerSide()) {
       try {
         BUILD_TIMESTAMP = path.resolve(__dirname, '../../../.build-timestamp');
         BUILD_TIMESTAMP = fs.readFileSync(BUILD_TIMESTAMP).toString();
